@@ -16,8 +16,11 @@ namespace Combat
         public Bitmap combatBitmap;
         Random r = new Random();
         List<BoxMap> boxs = new List<BoxMap>();
-        List<Spaceship> sps = new List<Spaceship>();
-
+        List<Spaceship> spsm = new List<Spaceship>();
+        List<Spaceship> spsc = new List<Spaceship>();
+        List<Barrier> bars1 = new List<Barrier>();
+        List<Barrier> bars2 = new List<Barrier>();
+        int damage;
         int id = 0;
 
         public Form_CombatScreen()
@@ -49,7 +52,7 @@ namespace Combat
                     box.p6x = box.p6x + j * 60;
                     box.p6y = box.p6y + i * 40;
                     box.id = id;
-                    if (i == 19) { box.block = 2; }
+                    if (i == 19) { box.block = -1; }
                     else { box.block = 0; }
                     boxs.Add(box);
                     id += 1;
@@ -75,49 +78,46 @@ namespace Combat
                     id += 1;
                 }
             }
-
-            for (int i = 0; i < 50; i++)
+            int a = r.Next(15, 25);
+            for (int i = 0; i < a; i++)
             {
 
                 id = r.Next(50, 800);
                 if (boxs[id].block == 0)
                 {
                     boxs[id].block = 1;
+                    Barrier bar = new Barrier();
+                    bar.type = boxs[id].block;
+                    bar.hp = r.Next(15, 40);
+                    bar.position = boxs[id].id;
+                    bars1.Add(bar);
                 }
             }
-
-            for (int i = 0; i < 10; i++)
+            a = r.Next(5, 10);
+            for (int i = 0; i < a; i++)
             {
 
                 id = r.Next(50, 800);
                 if (boxs[id].block == 0)
                 {
                     boxs[id].block = 2;
+                    Barrier bar = new Barrier();
+                    bar.type = boxs[id].block;
+                    bar.hp = r.Next(1000, 2000);
+                    bar.position = boxs[id].id;
+                    bars2.Add(bar);
                 }
             }
-            for (int id = 0; id < sps.Count; id++)
+            for (int id = 0; id < spsm.Count; id++)
             {
                 //id = 0;
-                if (sps[id].own == 1)
+                if (spsm[id].own == 1)
                 {
                     int i = r.Next(1, 38);
                     if (boxs[i].block == 0)
                     {
                         boxs[i].block = 3;
-                    }
-                    else
-                    {
-                        id--;
-                    }
-                    //id++;
-                }
-                // id = 0;
-                if (sps[id].own == 0)
-                {
-                    int i = r.Next(839, 877);
-                    if (boxs[i].block == 0)
-                    {
-                        boxs[i].block = 4;
+                        spsm[id].position = i;
                     }
                     else
                     {
@@ -126,7 +126,26 @@ namespace Combat
                     //id++;
                 }
             }
-        }
+            for (int id = 0; id < spsc.Count; id++)
+            {
+                // id = 0;
+                if (spsc[id].own == 0)
+                {
+                    int i = r.Next(839, 877);
+                    if (boxs[i].block == 0)
+                    {
+                        boxs[i].block = 4;
+                        spsc[id].position = i;
+                    }
+                    else
+                    {
+                        id--;
+                    }
+                    //id++;
+                }
+            }
+      }
+        
 
         public void Spaceship_Generate()
         {
@@ -134,13 +153,13 @@ namespace Combat
             {
                 Spaceship sp = new Spaceship(0, 0);
                 sp.own = 1;
-                sps.Add(sp);
+                spsm.Add(sp);
             }
             for (int i = 0; i < 10; i++)
             {
                 Spaceship sp = new Spaceship(0, 0);
                 sp.own = 0;
-                sps.Add(sp);
+                spsc.Add(sp);
             }
         }
 
@@ -148,12 +167,86 @@ namespace Combat
         {
             boxs[select].block = 0;
             boxs[select2].block = 3;
-            Draw();
+            for (int id = 0; id < spsm.Count; id++)
+            {
+                if (spsm[id].position == select)
+                {
+                    spsm[id].position = select2;
+                }
+            }
+                Draw();
+        }
+        public void Attack()
+        {
+            for (int id = 0; id < spsm.Count; id++)
+            {
+                if (spsm[id].position == select)
+                {
+                    damage = spsm[id].damage;
+                }
+            }
+            switch(boxs[select2].block)
+            {
+                case 1:
+                    for (int id = 0; id < bars1.Count; id++)
+                    {
+                        if (bars1[id].position == select2)
+                        {
+                            bars1[id].hp -= damage;
+                            if (bars1[id].hp <= 0)
+                            {
+                                boxs[select2].block = 0;
+                                bars1.Remove(bars1[id]);
+                            }
+                        }
+                    }
+                    break;
+                case 2:
+                    for (int id = 0; id < bars2.Count; id++)
+                    {
+                        if (bars2[id].position == select2)
+                        {
+                            bars2[id].hp -= damage;
+                            if (bars2[id].hp <= 0)
+                            {
+                                boxs[select2].block = 0;
+                                bars2.Remove(bars2[id]);
+                            }
+                        }
+                    }
+                    break;
+                
+                case 4:
+                    for (int id = 0; id < spsc.Count; id++)
+                    {
+                        if (spsc[id].position == select2)
+                        {
+                            spsc[id].hp -= damage;
+                            if (spsc[id].hp <= 0)
+                            {
+                                boxs[select2].block = 0;
+                                spsc.Remove(spsc[id]);
+                            }
+                        }
+                    }
+                    break;
+            }
+            if (spsc.Count == 0)
+            {
+                Form_Win fw = new Form_Win();
+                fw.ShowDialog();
+                Close();
+            }
+            else
+            {
+                Draw();
+            }
+           
         }
 
         public void Draw()
         {
-            
+            labelDamage.Text = "";
             combatBitmap = new Bitmap(combatImage.Width, combatImage.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(combatBitmap);
             g.FillRectangle(Brushes.Blue, 0, 0, combatBitmap.Width, combatBitmap.Height);
@@ -162,7 +255,7 @@ namespace Combat
             //Pen myPenbl = new Pen(Color.Black, 1);
             SolidBrush redBrush = new SolidBrush(Color.Red);
             SolidBrush blackBrush = new SolidBrush(Color.Black);
-            int nom = 0;
+
             id = 0;
             for (int j = 0; j < 23; j++)
             {
@@ -178,28 +271,59 @@ namespace Combat
                     g.DrawPolygon(redPen, myPointArrayHex);
                     switch (boxs[id].block)
                     {
+                        case -1:
+                            //g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(10 + j * 60, 10 + i * 40));
+                            break;
                         case 0:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.White, new PointF(10 + j * 60, 10 + i * 40));
+                            //g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.White, new PointF(10 + j * 60, 10 + i * 40));
                             break;
                         case 1:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(10 + j * 60, 10 + i * 40));
+                            for (int id1 = 0; id1 < bars1.Count; id1++)
+                            {
+                                if (bars1[id1].position == boxs[id].id)
+                                {
+                                    g.FillEllipse(blackBrush, boxs[id].p2x, boxs[id].p2y + 10, 20, 20);
+                                    g.DrawString(bars1[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(10 + j * 60, 10 + i * 40));
+                                }
+                            }
                             break;
                         case 2:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(10 + j * 60, 10 + i * 40));
+                            for (int id1 = 0; id1 < bars2.Count; id1++)
+                            {
+                                if (bars2[id1].position == boxs[id].id)
+                                {
+                                    g.FillEllipse(redBrush, boxs[id].p2x - 5, boxs[id].p2y + 5, 30, 30);
+                                    g.DrawString(bars2[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(10 + j * 60, 10 + i * 40));
+                                }
+                            }
                             break;
                         case 3:
-                            Point[] myPointArrayShip = {  
-                            new Point(sps[0].mp1x+j*60, sps[0].mp1y+i*40),
-                            new Point(sps[0].mp2x+j*60, sps[0].mp2y+i*40),
-                            new Point(sps[0].mp3x+j*60, sps[0].mp3y+i*40)};
-                            g.FillPolygon(redBrush, myPointArrayShip);
-                            break;
+                            for (int id1 = 0; id1 < spsm.Count; id1++)
+                            {
+                                if (spsm[id1].position == boxs[id].id)
+                                {
+                                    Point[] myPointArrayShip = {  
+                                    new Point(spsm[0].mp1x+j*60, spsm[0].mp1y+i*40),
+                                    new Point(spsm[0].mp2x+j*60, spsm[0].mp2y+i*40),
+                                    new Point(spsm[0].mp3x+j*60, spsm[0].mp3y+i*40)};
+                                    g.FillPolygon(redBrush, myPointArrayShip);
+                                    g.DrawString(spsm[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(10 + j * 60, 10 + i * 40));
+                                }
+                            }
+                                break;
                         case 4:
-                            Point[] compPointArrayShip = {  
-                            new Point(sps[0].cp1x+j*60, sps[0].cp1y+i*40),
-                            new Point(sps[0].cp2x+j*60, sps[0].cp2y+i*40),
-                            new Point(sps[0].cp3x+j*60, sps[0].cp3y+i*40)};
-                            g.FillPolygon(blackBrush, compPointArrayShip);
+                                for (int id1 = 0; id1 < spsc.Count; id1++)
+                                {
+                                    if (spsc[id1].position == boxs[id].id)
+                                    {
+                                        Point[] compPointArrayShip = {  
+                                        new Point(spsc[0].cp1x+j*60, spsc[0].cp1y+i*40),
+                                        new Point(spsc[0].cp2x+j*60, spsc[0].cp2y+i*40),
+                                        new Point(spsc[0].cp3x+j*60, spsc[0].cp3y+i*40)};
+                                        g.FillPolygon(blackBrush, compPointArrayShip);
+                                        g.DrawString(spsc[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(10 + j * 60, 10 + i * 40));
+                                    }
+                                }
                             break;
                     }
                     id++;
@@ -217,27 +341,55 @@ namespace Combat
                     switch (boxs[id].block)
                     {
                         case 0:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.White, new PointF(40 + j * 60, 30 + k * 40));
+                            //g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.White, new PointF(40 + j * 60, 30 + k * 40));
                             break;
                         case 1:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(40 + j * 60, 30 + k * 40));
+                            for (int id1 = 0; id1 < bars1.Count; id1++)
+                            {
+                                if (bars1[id1].position == boxs[id].id)
+                                {
+                                    g.FillEllipse(blackBrush, boxs[id].p2x, boxs[id].p2y + 10, 20, 20);
+                                    g.DrawString(bars1[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(40 + j * 60, 30 + k * 40));
+                                }
+                            }
                             break;
                         case 2:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(40 + j * 60, 30 + k * 40));
+                            for (int id1 = 0; id1 < bars2.Count; id1++)
+                            {
+                                if (bars2[id1].position == boxs[id].id)
+                                {
+                                    g.FillEllipse(redBrush, boxs[id].p2x - 5, boxs[id].p2y + 5, 30, 30);
+                                    g.DrawString(bars2[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(40 + j * 60, 30 + k * 40));
+                                }
+                            }
                             break;
                         case 3:
-                            Point[] myPointArrayShip = { 
-                            new Point(sps[0].mp1x+30+j*60, sps[0].mp1y+20+k*40),
-                            new Point(sps[0].mp2x+30+j*60, sps[0].mp2y+20+k*40),
-                            new Point(sps[0].mp3x+30+j*60, sps[0].mp3y+20+k*40)};
-                            g.FillPolygon(redBrush, myPointArrayShip);
+                            for (int id1 = 0; id1 < spsm.Count; id1++)
+                            {
+                                if (spsm[id1].position == boxs[id].id)
+                                {
+                                    Point[] myPointArrayShip = { 
+                                    new Point(spsm[0].mp1x+30+j*60, spsm[0].mp1y+20+k*40),
+                                    new Point(spsm[0].mp2x+30+j*60, spsm[0].mp2y+20+k*40),
+                                    new Point(spsm[0].mp3x+30+j*60, spsm[0].mp3y+20+k*40)};
+                                    g.FillPolygon(redBrush, myPointArrayShip);
+                                    g.DrawString(spsm[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(40 + j * 60, 30 + k * 40));
+                                }
+                            }
                             break;
                         case 4:
-                            Point[] compPointArrayShip = {  
-                            new Point(sps[0].cp1x+30+j*60, sps[0].cp1y+20+k*40),
-                            new Point(sps[0].cp2x+30+j*60, sps[0].cp2y+20+k*40),
-                            new Point(sps[0].cp3x+30+j*60, sps[0].cp3y+20+k*40)};
-                            g.FillPolygon(blackBrush, compPointArrayShip);
+                            for (int id1 = 0; id1 < spsc.Count; id1++)
+                            {
+                                if (spsc[id1].position == boxs[id].id)
+                                {
+                                    Point[] compPointArrayShip = {  
+                                    new Point(spsc[0].cp1x+30+j*60, spsc[0].cp1y+20+k*40),
+                                    new Point(spsc[0].cp2x+30+j*60, spsc[0].cp2y+20+k*40),
+                                    new Point(spsc[0].cp3x+30+j*60, spsc[0].cp3y+20+k*40)};
+                                    g.FillPolygon(blackBrush, compPointArrayShip);
+                                    g.DrawString(spsc[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(40 + j * 60, 30 + k * 40));
+                                }
+                            }
                             break;
                     }
                     id++;
@@ -286,13 +438,34 @@ namespace Combat
                         cl = 0;
                         break;
                     }
-
+                }
+                for (int j = 0; j < boxs.Count; j++)
+                {
+                    BoxMap box = boxs[j];
+                    if ((e.X > box.p2x) &&
+                        (e.X < box.p3x) &&
+                        (e.Y > box.p2y + 10) &&
+                        (e.Y < box.p6y - 10) &&
+                        (box.forattack == 1))
+                    {
+                        select2 = box.id;
+                        Attack();
+                        cl = 0;
+                        break;
+                    }
                 }
             }
         }
 
         public void Redraw()
         {
+            for (int id1 = 0; id1 < spsm.Count; id1++)
+            {
+                if (spsm[id1].position == select)
+                {
+                    labelDamage.Text = spsm[id1].damage.ToString();
+                }
+            }
             combatBitmap = new Bitmap(combatImage.Width, combatImage.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(combatBitmap);
             g.FillRectangle(Brushes.Blue, 0, 0, combatBitmap.Width, combatBitmap.Height);
@@ -303,7 +476,8 @@ namespace Combat
             SolidBrush greenBrush = new SolidBrush(Color.Green);
             SolidBrush redBrush = new SolidBrush(Color.Red);
             SolidBrush blackBrush = new SolidBrush(Color.Black);
-            int nom = 0;
+            SolidBrush coralBrush = new SolidBrush(Color.Coral);
+
             id = 0;
             for (int j = 0; j < 23; j++)
             {
@@ -326,36 +500,83 @@ namespace Combat
                     {
                         boxs[id].forstep = 1;
                         g.FillPolygon(greenBrush, myPointArrayHex);
+                        g.DrawPolygon(redPen, myPointArrayHex);
                     }
                     else
                     {
-                        boxs[id].forstep = 0;
-                        g.DrawPolygon(redPen, myPointArrayHex);
+                        if ((
+                            (boxs[id].id == select + 19) ||
+                            (boxs[id].id == select + 20)) &&
+                            (boxs[id].block != 0) &&
+                            (boxs[id].block != -1) &&
+                            (boxs[id].block != 3))
+                        {
+                            boxs[id].forattack = 1;
+                            g.FillPolygon(coralBrush, myPointArrayHex);
+                            g.DrawPolygon(redPen, myPointArrayHex);
+                        }
+                        else
+                        {
+                            boxs[id].forattack = 0;
+                            boxs[id].forstep = 0;
+                            g.DrawPolygon(redPen, myPointArrayHex);
+                        }
                     }
                     switch (boxs[id].block)
                     {
+                        case -1:
+                            //g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(10 + j * 60, 10 + i * 40));
+                            break;
                         case 0:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.White, new PointF(10 + j * 60, 10 + i * 40));
+                           // g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.White, new PointF(10 + j * 60, 10 + i * 40));
                             break;
                         case 1:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(10 + j * 60, 10 + i * 40));
+                            for (int id1 = 0; id1 < bars1.Count; id1++)
+                            {
+                                if (bars1[id1].position == boxs[id].id)
+                                {
+                                    g.FillEllipse(blackBrush, boxs[id].p2x, boxs[id].p2y + 10, 20, 20);
+                                    g.DrawString(bars1[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(10 + j * 60, 10 + i * 40));
+                                }
+                            }
                             break;
                         case 2:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(10 + j * 60, 10 + i * 40));
+                            for (int id1 = 0; id1 < bars2.Count; id1++)
+                            {
+                                if (bars2[id1].position == boxs[id].id)
+                                {
+                                    g.FillEllipse(redBrush, boxs[id].p2x - 5, boxs[id].p2y + 5, 30, 30);
+                                    g.DrawString(bars2[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(10 + j * 60, 10 + i * 40));
+                                }
+                            }
                             break;
                         case 3:
-                            Point[] myPointArrayShip = {  
-                            new Point(sps[0].mp1x+j*60, sps[0].mp1y+i*40),
-                            new Point(sps[0].mp2x+j*60, sps[0].mp2y+i*40),
-                            new Point(sps[0].mp3x+j*60, sps[0].mp3y+i*40)};
-                            g.FillPolygon(redBrush, myPointArrayShip);
+                            for (int id1 = 0; id1 < spsm.Count; id1++)
+                            {
+                                if (spsm[id1].position == boxs[id].id)
+                                {
+                                    Point[] myPointArrayShip = {  
+                                    new Point(spsm[0].mp1x+j*60, spsm[0].mp1y+i*40),
+                                    new Point(spsm[0].mp2x+j*60, spsm[0].mp2y+i*40),
+                                    new Point(spsm[0].mp3x+j*60, spsm[0].mp3y+i*40)};
+                                    g.FillPolygon(redBrush, myPointArrayShip);
+                                    g.DrawString(spsm[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(10 + j * 60, 10 + i * 40));
+                                }
+                            }
                             break;
                         case 4:
-                            Point[] compPointArrayShip = {  
-                            new Point(sps[0].cp1x+j*60, sps[0].cp1y+i*40),
-                            new Point(sps[0].cp2x+j*60, sps[0].cp2y+i*40),
-                            new Point(sps[0].cp3x+j*60, sps[0].cp3y+i*40)};
-                            g.FillPolygon(blackBrush, compPointArrayShip);
+                            for (int id1 = 0; id1 < spsc.Count; id1++)
+                            {
+                                if (spsc[id1].position == boxs[id].id)
+                                {
+                                    Point[] compPointArrayShip = {  
+                                        new Point(spsc[0].cp1x+j*60, spsc[0].cp1y+i*40),
+                                        new Point(spsc[0].cp2x+j*60, spsc[0].cp2y+i*40),
+                                        new Point(spsc[0].cp3x+j*60, spsc[0].cp3y+i*40)};
+                                    g.FillPolygon(blackBrush, compPointArrayShip);
+                                    g.DrawString(spsc[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(10 + j * 60, 10 + i * 40));
+                                }
+                            }
                             break;
                     }
                     id++;
@@ -378,37 +599,82 @@ namespace Combat
                         (boxs[id].block == 0))
                     {
                         boxs[id].forstep = 1;
+
                         g.FillPolygon(greenBrush, myPointArrayHex);
+                        g.DrawPolygon(redPen, myPointArrayHex);
                     }
                     else
                     {
-                        boxs[id].forstep = 0;
-                        g.DrawPolygon(redPen, myPointArrayHex);
+                        if ((
+                            (boxs[id].id == select + 19) ||
+                            (boxs[id].id == select + 20)) &&
+                            (boxs[id].block != 0) &&
+                            (boxs[id].block != -1) &&
+                            (boxs[id].block != 3))
+                        {
+                            boxs[id].forattack = 1;
+                            g.FillPolygon(coralBrush, myPointArrayHex);
+                            g.DrawPolygon(redPen, myPointArrayHex);
+                        }
+                        else
+                        {
+                            boxs[id].forattack = 0;
+                            boxs[id].forstep = 0;
+                            g.DrawPolygon(redPen, myPointArrayHex);
+                        }
                     }
                     switch (boxs[id].block)
                     {
                         case 0:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.White, new PointF(40 + j * 60, 30 + k * 40));
+                           // g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.White, new PointF(40 + j * 60, 30 + k * 40));
                             break;
                         case 1:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(40 + j * 60, 30 + k * 40));
+                            for (int id1 = 0; id1 < bars1.Count; id1++)
+                            {
+                                if (bars1[id1].position == boxs[id].id)
+                                {
+                                    g.FillEllipse(blackBrush, boxs[id].p2x, boxs[id].p2y + 10, 20, 20);
+                                    g.DrawString(bars1[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(40 + j * 60, 30 + k * 40));
+                                }
+                            }
                             break;
                         case 2:
-                            g.DrawString(boxs[id].id.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(40 + j * 60, 30 + k * 40));
+                            for (int id1 = 0; id1 < bars2.Count; id1++)
+                            {
+                                if (bars2[id1].position == boxs[id].id)
+                                {
+                                    g.FillEllipse(redBrush, boxs[id].p2x - 5, boxs[id].p2y + 5, 30, 30);
+                                    g.DrawString(bars2[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(40 + j * 60, 30 + k * 40));
+                                }
+                            }
                             break;
                         case 3:
-                            Point[] myPointArrayShip = { 
-                            new Point(sps[0].mp1x+30+j*60, sps[0].mp1y+20+k*40),
-                            new Point(sps[0].mp2x+30+j*60, sps[0].mp2y+20+k*40),
-                            new Point(sps[0].mp3x+30+j*60, sps[0].mp3y+20+k*40)};
-                            g.FillPolygon(redBrush, myPointArrayShip);
+                            for (int id1 = 0; id1 < spsm.Count; id1++)
+                            {
+                                if (spsm[id1].position == boxs[id].id)
+                                {
+                                    Point[] myPointArrayShip = { 
+                                    new Point(spsm[0].mp1x+30+j*60, spsm[0].mp1y+20+k*40),
+                                    new Point(spsm[0].mp2x+30+j*60, spsm[0].mp2y+20+k*40),
+                                    new Point(spsm[0].mp3x+30+j*60, spsm[0].mp3y+20+k*40)};
+                                    g.FillPolygon(redBrush, myPointArrayShip);
+                                    g.DrawString(spsm[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(40 + j * 60, 30 + k * 40));
+                                }
+                            }
                             break;
                         case 4:
-                            Point[] compPointArrayShip = {  
-                            new Point(sps[0].cp1x+30+j*60, sps[0].cp1y+20+k*40),
-                            new Point(sps[0].cp2x+30+j*60, sps[0].cp2y+20+k*40),
-                            new Point(sps[0].cp3x+30+j*60, sps[0].cp3y+20+k*40)};
-                            g.FillPolygon(blackBrush, compPointArrayShip);
+                            for (int id1 = 0; id1 < spsc.Count; id1++)
+                            {
+                                if (spsc[id1].position == boxs[id].id)
+                                {
+                                    Point[] compPointArrayShip = {  
+                                    new Point(spsc[0].cp1x+30+j*60, spsc[0].cp1y+20+k*40),
+                                    new Point(spsc[0].cp2x+30+j*60, spsc[0].cp2y+20+k*40),
+                                    new Point(spsc[0].cp3x+30+j*60, spsc[0].cp3y+20+k*40)};
+                                    g.FillPolygon(blackBrush, compPointArrayShip);
+                                    g.DrawString(spsc[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(40 + j * 60, 30 + k * 40));
+                                }
+                            }
                             break;
                     }
                     id++;

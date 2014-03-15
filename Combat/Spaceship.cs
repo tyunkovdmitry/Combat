@@ -28,6 +28,7 @@ namespace Combat
         public int cp2y = 20;
         public int cp3x = 25;
         public int cp3y = 30;
+        public int position;
 
         public Spaceship(int type_ship, int type_weapon)
         {
