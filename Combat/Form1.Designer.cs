@@ -52,7 +52,7 @@
             this.cancleSelect.TabIndex = 1;
             this.cancleSelect.Text = "Cancle Select";
             this.cancleSelect.UseVisualStyleBackColor = true;
-            this.cancleSelect.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button1_MouseClick);
+            this.cancleSelect.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cancleSelect_MouseClick);
             // 
             // labelDamage
             // 

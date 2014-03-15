@@ -10,8 +10,8 @@ namespace Combat
     {
         
         public int hp;
-        public int type;
-        public int position;
+        public int type;//тип преграды
+        public int position;//позиция преграды
         
     }
 }
