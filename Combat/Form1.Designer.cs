@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.combatImage = new System.Windows.Forms.PictureBox();
-            this.cancleSelect = new System.Windows.Forms.Button();
+            this.cancelSelect = new System.Windows.Forms.Button();
             this.labelDamage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.combatImage)).BeginInit();
             this.SuspendLayout();
@@ -39,20 +39,20 @@
             this.combatImage.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.combatImage.Location = new System.Drawing.Point(93, 12);
             this.combatImage.Name = "combatImage";
-            this.combatImage.Size = new System.Drawing.Size(1401, 781);
+            this.combatImage.Size = new System.Drawing.Size(1366, 768);
             this.combatImage.TabIndex = 0;
             this.combatImage.TabStop = false;
             this.combatImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.combatImage_MouseClick);
             // 
-            // cancleSelect
+            // cancelSelect
             // 
-            this.cancleSelect.Location = new System.Drawing.Point(12, 12);
-            this.cancleSelect.Name = "cancleSelect";
-            this.cancleSelect.Size = new System.Drawing.Size(75, 23);
-            this.cancleSelect.TabIndex = 1;
-            this.cancleSelect.Text = "Cancle Select";
-            this.cancleSelect.UseVisualStyleBackColor = true;
-            this.cancleSelect.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cancleSelect_MouseClick);
+            this.cancelSelect.Location = new System.Drawing.Point(12, 12);
+            this.cancelSelect.Name = "cancelSelect";
+            this.cancelSelect.Size = new System.Drawing.Size(75, 23);
+            this.cancelSelect.TabIndex = 1;
+            this.cancelSelect.Text = "Cancel Select";
+            this.cancelSelect.UseVisualStyleBackColor = true;
+            this.cancelSelect.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cancelSelect_MouseClick);
             // 
             // labelDamage
             // 
@@ -70,7 +70,7 @@
             this.AutoScrollMargin = new System.Drawing.Size(12, 12);
             this.ClientSize = new System.Drawing.Size(664, 485);
             this.Controls.Add(this.labelDamage);
-            this.Controls.Add(this.cancleSelect);
+            this.Controls.Add(this.cancelSelect);
             this.Controls.Add(this.combatImage);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(640, 480);
@@ -86,7 +86,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox combatImage;
-        private System.Windows.Forms.Button cancleSelect;
+        private System.Windows.Forms.Button cancelSelect;
         private System.Windows.Forms.Label labelDamage;
     }
 }

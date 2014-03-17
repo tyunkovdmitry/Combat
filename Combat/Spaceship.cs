@@ -15,19 +15,19 @@ namespace Combat
         public int reload;//перезарядка, ходов
         public int own;//принадлежность корабля
 
-        public int mp1x = 15;//начальные координаты для создания наших кораблей
-        public int mp1y = 10;
-        public int mp2x = 35;
-        public int mp2y = 20;
-        public int mp3x = 15;
-        public int mp3y = 30;
+        public int mp1x = 20;//начальные координаты для создания наших кораблей
+        public int mp1y = 15;
+        public int mp2x = 40;
+        public int mp2y = 25;
+        public int mp3x = 20;
+        public int mp3y = 35;
 
-        public int cp1x = 25;//начальные координаты для создания кораблей компьютера
-        public int cp1y = 10;
-        public int cp2x = 5;
-        public int cp2y = 20;
-        public int cp3x = 25;
-        public int cp3y = 30;
+        public int cp1x = 30;//начальные координаты для создания кораблей компьютера
+        public int cp1y = 15;
+        public int cp2x = 10;
+        public int cp2y = 25;
+        public int cp3x = 30;
+        public int cp3y = 35;
         public int position;
 
         public Spaceship(int type_ship, int type_weapon)
