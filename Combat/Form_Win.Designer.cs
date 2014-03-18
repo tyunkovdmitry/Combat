@@ -59,9 +59,9 @@
             this.labelWin.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelWin.Location = new System.Drawing.Point(6, 16);
             this.labelWin.Name = "labelWin";
-            this.labelWin.Size = new System.Drawing.Size(93, 33);
+            this.labelWin.Size = new System.Drawing.Size(71, 33);
             this.labelWin.TabIndex = 0;
-            this.labelWin.Text = "lable1";
+            this.labelWin.Text = "WIN";
             // 
             // Form_Win
             // 
@@ -72,8 +72,11 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form_Win";
-            this.Text = "Form_Win";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Win";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

@@ -137,6 +137,8 @@
             this.Controls.Add(this.numericSpaceShip);
             this.Controls.Add(this.labelSelectCount);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form_Start";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "StartDialog";
