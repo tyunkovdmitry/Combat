@@ -22,7 +22,7 @@ namespace Combat
             Player2 player2 = new Player2(countSpaceShip);
             AllBarriers barriers = new AllBarriers(r.Next(10, 50), r.Next(10, 20));
 
-            for (int j = 0; j < (width / 60); j++)//заполнение столбцами в ширину
+            for (int j = 0; j < ((width - 20) / 60); j++)//заполнение столбцами в ширину
             {
                 for (int i = 0; i < (height / 40) - 1; i++)//нечетный столбец
                 {

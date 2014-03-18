@@ -40,18 +40,18 @@
             // combatImage
             // 
             this.combatImage.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.combatImage.Location = new System.Drawing.Point(93, 12);
+            this.combatImage.Location = new System.Drawing.Point(12, 41);
             this.combatImage.Name = "combatImage";
-            this.combatImage.Size = new System.Drawing.Size(1366, 768);
+            this.combatImage.Size = new System.Drawing.Size(1440, 900);
             this.combatImage.TabIndex = 0;
             this.combatImage.TabStop = false;
             this.combatImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.combatImage_MouseClick);
             // 
             // cancelSelect
             // 
-            this.cancelSelect.Location = new System.Drawing.Point(12, 54);
+            this.cancelSelect.Location = new System.Drawing.Point(343, 12);
             this.cancelSelect.Name = "cancelSelect";
-            this.cancelSelect.Size = new System.Drawing.Size(75, 34);
+            this.cancelSelect.Size = new System.Drawing.Size(94, 23);
             this.cancelSelect.TabIndex = 1;
             this.cancelSelect.Text = "Cancel Select";
             this.cancelSelect.UseVisualStyleBackColor = true;
@@ -60,24 +60,24 @@
             // labelDamage
             // 
             this.labelDamage.AutoSize = true;
-            this.labelDamage.Location = new System.Drawing.Point(12, 38);
+            this.labelDamage.Location = new System.Drawing.Point(210, 17);
             this.labelDamage.Name = "labelDamage";
-            this.labelDamage.Size = new System.Drawing.Size(35, 13);
+            this.labelDamage.Size = new System.Drawing.Size(50, 13);
             this.labelDamage.TabIndex = 2;
-            this.labelDamage.Text = "lable1";
+            this.labelDamage.Text = "Damage:";
             // 
             // labelAction
             // 
             this.labelAction.AutoSize = true;
-            this.labelAction.Location = new System.Drawing.Point(12, 25);
+            this.labelAction.Location = new System.Drawing.Point(119, 17);
             this.labelAction.Name = "labelAction";
-            this.labelAction.Size = new System.Drawing.Size(35, 13);
+            this.labelAction.Size = new System.Drawing.Size(40, 13);
             this.labelAction.TabIndex = 3;
-            this.labelAction.Text = "lable2";
+            this.labelAction.Text = "Action:";
             // 
             // buttonEndTurn
             // 
-            this.buttonEndTurn.Location = new System.Drawing.Point(12, 94);
+            this.buttonEndTurn.Location = new System.Drawing.Point(543, 12);
             this.buttonEndTurn.Name = "buttonEndTurn";
             this.buttonEndTurn.Size = new System.Drawing.Size(75, 23);
             this.buttonEndTurn.TabIndex = 4;
@@ -88,7 +88,7 @@
             // labelTurnPlayer
             // 
             this.labelTurnPlayer.AutoSize = true;
-            this.labelTurnPlayer.Location = new System.Drawing.Point(12, 12);
+            this.labelTurnPlayer.Location = new System.Drawing.Point(12, 17);
             this.labelTurnPlayer.Name = "labelTurnPlayer";
             this.labelTurnPlayer.Size = new System.Drawing.Size(70, 13);
             this.labelTurnPlayer.TabIndex = 5;

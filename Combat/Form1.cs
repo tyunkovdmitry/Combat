@@ -29,7 +29,7 @@ namespace Combat
         int selectNewBox = -10000;
         int stepDistance;
         int attackDistance;
-        
+
 
 
         public Form_CombatScreen()
@@ -62,7 +62,7 @@ namespace Combat
 
         public void Draw()//рисование карты без выделений
         {
-            
+
             if (clickCount == 1)
             {
                 if (activePlayer == 0)
@@ -133,7 +133,7 @@ namespace Combat
                     }
                 }
             }
-            for (int j = 0; j < (int)(combatImage.Width / 60); j++)
+            for (int j = 0; j < (int)((combatImage.Width - 20) / 60); j++)
             {
                 for (int i = 0; i < (int)(combatImage.Height / 40) - 1; i++)
                 {
@@ -144,7 +144,7 @@ namespace Combat
                     new Point(boxs[id].pointX4,boxs[id].pointY4),
                     new Point(boxs[id].pointX5,boxs[id].pointY5),
                     new Point(boxs[id].pointX6,boxs[id].pointY6)};
-                   
+
                     if (clickCount == 1)
                     {
                         if ((((Math.Pow((boxs[selectPreviousBox].pointXCenter - boxs[id].pointXCenter), 2) / Math.Pow((53 * stepDistance), 2)) + (Math.Pow((boxs[selectPreviousBox].pointYCenter - boxs[id].pointYCenter), 2) / (Math.Pow((60 * stepDistance), 2)))) <= 1) &&
@@ -159,33 +159,33 @@ namespace Combat
                         {
                             if (activePlayer == 0)
                             {
-                                    if ((boxs[id].pointXCenter > boxs[selectPreviousBox].pointXCenter) &&
-                                        (boxs[id].pointXCenter < boxs[selectPreviousBox].pointXCenter + 50 * attackDistance) &&
-                                        (boxs[id].pointYCenter <= boxs[selectPreviousBox].pointYCenter - 40 * (attackDistance)) &&
-                                        (boxs[id].pointYCenter >= boxs[selectPreviousBox].pointYCenter + 40 * (attackDistance)) &&
-                                        (boxs[id].block != 0) &&//некоторое условие рисования ячейки для атаки
-                                        (boxs[id].block != 3))
-                                    {
-                                        boxs[id].forattack = 1;//помечаем ячейку, как ячейку для атаки
-                                        g.FillPolygon(coralBrush, myPointArrayHex);//закрашиваем шестиугольник
+                                if ((boxs[id].pointXCenter > boxs[selectPreviousBox].pointXCenter) &&
+                                    (boxs[id].pointXCenter < boxs[selectPreviousBox].pointXCenter + 50 * attackDistance) &&
+                                    (boxs[id].pointYCenter <= boxs[selectPreviousBox].pointYCenter + 40 * (attackDistance)) &&
+                                    (boxs[id].pointYCenter >= boxs[selectPreviousBox].pointYCenter - 40 * (attackDistance)) &&
+                                    (boxs[id].block != 0) &&//некоторое условие рисования ячейки для атаки
+                                    (boxs[id].block != 3))
+                                {
+                                    boxs[id].forattack = 1;//помечаем ячейку, как ячейку для атаки
+                                    g.FillPolygon(coralBrush, myPointArrayHex);//закрашиваем шестиугольник
 
-                                    }
-                                    else
-                                    {
-                                        boxs[id].forattack = 0;//ячейка не для атаки
-                                        boxs[id].forstep = 0;//ячейка не для шага
+                                }
+                                else
+                                {
+                                    boxs[id].forattack = 0;//ячейка не для атаки
+                                    boxs[id].forstep = 0;//ячейка не для шага
 
-                                    }
+                                }
                             }
                             else
                             {
 
                                 if ((boxs[id].pointXCenter < boxs[selectPreviousBox].pointXCenter) &&
                                         (boxs[id].pointXCenter > boxs[selectPreviousBox].pointXCenter - 50 * attackDistance) &&
-                                        (boxs[id].pointYCenter <= boxs[selectPreviousBox].pointYCenter - 40 * (attackDistance)) &&
-                                        (boxs[id].pointYCenter >= boxs[selectPreviousBox].pointYCenter + 40 * (attackDistance)) &&
+                                        (boxs[id].pointYCenter <= boxs[selectPreviousBox].pointYCenter + 40 * (attackDistance)) &&
+                                        (boxs[id].pointYCenter >= boxs[selectPreviousBox].pointYCenter - 40 * (attackDistance)) &&
                                         (boxs[id].block != 0) &&//некоторое условие рисования ячейки для атаки
-                                        (boxs[id].block != 3))
+                                        (boxs[id].block != 4))
                                 {
                                     boxs[id].forattack = 1;//помечаем ячейку, как ячейку для атаки
                                     g.FillPolygon(coralBrush, myPointArrayHex);//закрашиваем шестиугольник
@@ -278,12 +278,12 @@ namespace Combat
                         {
                             if (activePlayer == 0)
                             {
-                                    if ((boxs[id].pointXCenter > boxs[selectPreviousBox].pointXCenter) &&
-                                        (boxs[id].pointXCenter < boxs[selectPreviousBox].pointXCenter + 50 * attackDistance) &&
-                                        (boxs[id].pointYCenter <= boxs[selectPreviousBox].pointYCenter - 40 * (attackDistance)) &&
-                                        (boxs[id].pointYCenter >= boxs[selectPreviousBox].pointYCenter + 40 * (attackDistance)) &&
-                                        (boxs[id].block != 0) &&//некоторое условие рисования ячейки для атаки
-                                        (boxs[id].block != 3))
+                                if ((boxs[id].pointXCenter > boxs[selectPreviousBox].pointXCenter) &&
+                                    (boxs[id].pointXCenter < boxs[selectPreviousBox].pointXCenter + 50 * attackDistance) &&
+                                    (boxs[id].pointYCenter <= boxs[selectPreviousBox].pointYCenter + 40 * (attackDistance)) &&
+                                    (boxs[id].pointYCenter >= boxs[selectPreviousBox].pointYCenter - 40 * (attackDistance)) &&
+                                    (boxs[id].block != 0) &&//некоторое условие рисования ячейки для атаки
+                                    (boxs[id].block != 3))
                                 {
                                     boxs[id].forattack = 1;//помечаем ячейку, как ячейку для атаки
                                     g.FillPolygon(coralBrush, myPointArrayHex);//закрашиваем шестиугольник
@@ -300,10 +300,10 @@ namespace Combat
                             {
                                 if ((boxs[id].pointXCenter < boxs[selectPreviousBox].pointXCenter) &&
                                         (boxs[id].pointXCenter > boxs[selectPreviousBox].pointXCenter - 50 * attackDistance) &&
-                                        (boxs[id].pointYCenter <= boxs[selectPreviousBox].pointYCenter - 40 * (attackDistance)) &&
-                                        (boxs[id].pointYCenter >= boxs[selectPreviousBox].pointYCenter + 40 * (attackDistance)) &&
+                                        (boxs[id].pointYCenter <= boxs[selectPreviousBox].pointYCenter + 40 * (attackDistance)) &&
+                                        (boxs[id].pointYCenter >= boxs[selectPreviousBox].pointYCenter - 40 * (attackDistance)) &&
                                         (boxs[id].block != 0) &&//некоторое условие рисования ячейки для атаки
-                                        (boxs[id].block != 3))
+                                        (boxs[id].block != 4))
                                 {
                                     boxs[id].forattack = 1;//помечаем ячейку, как ячейку для атаки
                                     g.FillPolygon(coralBrush, myPointArrayHex);//закрашиваем шестиугольник
@@ -433,7 +433,7 @@ namespace Combat
                         clickCount = 0;//сбрасываем счетчик кликов
 
                         Action actionStep = new Action(selectPreviousBox, selectNewBox, activePlayer, ref boxs, ref spaceShipPlayer1, ref  spaceShipPlayer2);
-                        
+
                         selectPreviousBox = -(2 * boxs.Count);
                         selectPreviousBox = -(2 * boxs.Count);
                         action++;
