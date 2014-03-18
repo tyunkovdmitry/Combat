@@ -11,7 +11,6 @@ namespace Combat
     {
         public int block;//блокировка
         /*
-         * -1: крайняя ячейка которая выходит за границу
          * 0: ячейка не блокированна
          * 1: препятствие 1го типа (маленькое)
          * 2: препятствие 2го типа (большое)
@@ -22,17 +21,20 @@ namespace Combat
         public int forstep;//1: ячейка для шага, 0: обычная
         public int forattack;//1: ячейка для атаки, 0: обычная
 
-        public int p1x = 5;//начальные координаты шестиугольников
-        public int p1y = 25;
-        public int p2x = 15;
-        public int p2y = 5;
-        public int p3x = 35;
-        public int p3y = 5;
-        public int p4x = 45;
-        public int p4y = 25;
-        public int p5x = 35;
-        public int p5y = 45;
-        public int p6x = 15;
-        public int p6y = 45;
+        public int pointX1 = 5;//начальные координаты шестиугольников
+        public int pointY1 = 25;
+        public int pointX2 = 15;
+        public int pointY2 = 5;
+        public int pointX3 = 35;
+        public int pointY3 = 5;
+        public int pointX4 = 45;
+        public int pointY4 = 25;
+        public int pointX5 = 35;
+        public int pointY5 = 45;
+        public int pointX6 = 15;
+        public int pointY6 = 45;
+
+        public int pointXCenter;
+        public int pointYCenter;
     }
 }

@@ -17,6 +17,20 @@ namespace Combat
             InitializeComponent();
         }
 
+        public Form_Win(int win_player)
+        {
+            InitializeComponent();
+
+            if (win_player == 0)
+            {
+                labelWin.Text = "Red Player Win!";
+            }
+            else
+            {
+                labelWin.Text = "Black Player Win!";
+            }
+        }
+
         private void buttonOK_Click(object sender, EventArgs e)
         {
             Close();

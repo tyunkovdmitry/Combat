@@ -6,44 +6,44 @@ using System.Threading.Tasks;
 
 namespace Combat
 {
-    class Spaceship
+    class SpaceShip
     {
-        public int step_distance;//растояние шага
+        public int stepDistance;//растояние шага
         public int hp;
-        public int attack_distance;//растояние атаки
+        public int attackDistance;//растояние атаки
         public int damage;
         public int reload;//перезарядка, ходов
-        public int own;//принадлежность корабля
-
-        public int mp1x = 20;//начальные координаты для создания наших кораблей
-        public int mp1y = 15;
-        public int mp2x = 40;
-        public int mp2y = 25;
-        public int mp3x = 20;
-        public int mp3y = 35;
-
-        public int cp1x = 30;//начальные координаты для создания кораблей компьютера
-        public int cp1y = 15;
-        public int cp2x = 10;
-        public int cp2y = 25;
-        public int cp3x = 30;
-        public int cp3y = 35;
         public int position;
 
-        public Spaceship(int type_ship, int type_weapon)
+        public int player1PointX1 = 20;//начальные координаты для создания наших кораблей
+        public int player1PointY1 = 15;
+        public int player1PointX2 = 40;
+        public int player1PointY2 = 25;
+        public int player1PointX3 = 20;
+        public int player1PointY3 = 35;
+
+        public int player2PointX1 = 30;//начальные координаты для создания кораблей компьютера
+        public int player2PointY1 = 15;
+        public int player2PointX2 = 10;
+        public int player2PointY2 = 25;
+        public int player2PointX3 = 30;
+        public int player2PointY3 = 35;
+        
+        public SpaceShip(int typeShip, int typeWeapon)
         {
-            switch (type_ship)
+            switch (typeShip)
             {
                 case 0:
                     hp = 50;
-                    step_distance = 3;
+                    stepDistance = 3;
                     break;
             }
-            switch (type_weapon)
+
+            switch (typeWeapon)
             {
                 case 0:
                     damage = 25;
-                    attack_distance = 5;
+                    attackDistance = 5;
                     reload = 0;
                     break;
             }
