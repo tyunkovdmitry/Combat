@@ -14,27 +14,35 @@ namespace Combat
     {
         Bitmap combatBitmap;
         public Random r = new Random();
+
         List<BoxMap> boxs = new List<BoxMap>();
         List<SpaceShip> spaceShipPlayer1 = new List<SpaceShip>();
         List<SpaceShip> spaceShipPlayer2 = new List<SpaceShip>();
         List<Barrier> barriersType1 = new List<Barrier>();
         List<Barrier> barriersType2 = new List<Barrier>();
+
         int damage;
         int id = 0;
         int clickCount = 0;
         int action = 0;
         int maxAction = 5;
         int activePlayer = 0;
-        int selectPreviousBox = -10000;//подумать
-        int selectNewBox = -10000;
+        int selectPreviousBox = 0;
+        int selectNewBox = 0;
         int stepDistance;
         int attackDistance;
-
-
+        int spaceShipCount;
 
         public Form_CombatScreen()
         {
             InitializeComponent();
+
+            Form_Start fs = new Form_Start();
+            fs.ShowDialog();
+            spaceShipCount = (int)fs.numericSpaceShip.Value;
+            if (fs.radioButton640x480.Checked) { combatImage.Width = 640; combatImage.Height = 480; }
+            if (fs.radioButton1440x900.Checked) { combatImage.Width = 1440; combatImage.Height = 900; }
+            if (fs.radioButton1900x1080.Checked) { combatImage.Width = 1900; combatImage.Height = 1080; }
 
             Generate_Map();
             Draw();
@@ -42,7 +50,9 @@ namespace Combat
 
         public void Generate_Map()
         {
-            FullMap map = new FullMap((int)(combatImage.Width), (int)(combatImage.Height), 10);
+            
+
+            FullMap map = new FullMap((int)(combatImage.Width), (int)(combatImage.Height), spaceShipCount);
 
             boxs.AddRange(map.boxs);
             map.boxs.Clear();
@@ -60,7 +70,7 @@ namespace Combat
             map.barrierType2.Clear();
         }
 
-        public void Draw()//рисование карты без выделений
+        public void Draw()//рисование
         {
 
             if (clickCount == 1)
@@ -434,8 +444,8 @@ namespace Combat
 
                         Action actionStep = new Action(selectPreviousBox, selectNewBox, activePlayer, ref boxs, ref spaceShipPlayer1, ref  spaceShipPlayer2);
 
-                        selectPreviousBox = -(2 * boxs.Count);
-                        selectPreviousBox = -(2 * boxs.Count);
+                        selectPreviousBox = 0;
+                        selectPreviousBox = 0;
                         action++;
                         Draw();
                         break;
@@ -456,8 +466,8 @@ namespace Combat
                         Action actionAttack = new Action(selectPreviousBox, selectNewBox, activePlayer, ref boxs, ref spaceShipPlayer1, ref  spaceShipPlayer2, ref barriersType1, ref barriersType2);
                         damage = actionAttack.damage;
 
-                        selectPreviousBox = -(2 * boxs.Count);
-                        selectNewBox = -(2 * boxs.Count);
+                        selectPreviousBox = 0;
+                        selectNewBox = 0;
                         action++;
                         if (spaceShipPlayer2.Count == 0)//уничтожены все корабли противника
                         {
@@ -465,18 +475,15 @@ namespace Combat
                             fw.ShowDialog();//выводим сообщение о победе
                             Close();//закрываем окно
                         }
+                        if (spaceShipPlayer1.Count == 0)//уничтожены все корабли противника
+                        {
+                            Form_Win fw = new Form_Win(1);
+                            fw.ShowDialog();//выводим сообщение о победе
+                            Close();//закрываем окно
+                        }
                         else
                         {
-                            if (spaceShipPlayer1.Count == 0)//уничтожены все корабли противника
-                            {
-                                Form_Win fw = new Form_Win(1);
-                                fw.ShowDialog();//выводим сообщение о победе
-                                Close();//закрываем окно
-                            }
-                            else
-                            {
-                                Draw();
-                            }
+                            Draw();
                         }
                         break;
                     }
