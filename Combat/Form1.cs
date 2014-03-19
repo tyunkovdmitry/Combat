@@ -112,7 +112,7 @@ namespace Combat
 
             combatBitmap = new Bitmap(combatImage.Width, combatImage.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(combatBitmap);
-            g.FillRectangle(Brushes.Blue, 0, 0, combatBitmap.Width, combatBitmap.Height);//рисуем фон окна
+            g.FillRectangle(Brushes.DarkBlue, 0, 0, combatBitmap.Width, combatBitmap.Height);//рисуем фон окна
 
             Pen redPen = new Pen(Color.Red, 1);
             Pen blackPen = new Pen(Color.Black, 1);
@@ -120,7 +120,7 @@ namespace Combat
             SolidBrush greenBrush = new SolidBrush(Color.Green);
             SolidBrush redBrush = new SolidBrush(Color.Red);
             SolidBrush blackBrush = new SolidBrush(Color.Black);
-            SolidBrush coralBrush = new SolidBrush(Color.Coral);
+            SolidBrush darkRedBrush = new SolidBrush(Color.DarkRed);
 
             id = 0;
             if (clickCount == 1)
@@ -184,7 +184,7 @@ namespace Combat
                                     (boxs[id].block != 3))
                                 {
                                     boxs[id].forattack = 1;//помечаем ячейку, как ячейку для атаки
-                                    g.FillPolygon(coralBrush, myPointArrayHex);//закрашиваем шестиугольник
+                                    g.FillPolygon(darkRedBrush, myPointArrayHex);//закрашиваем шестиугольник
 
                                 }
                                 else
@@ -205,7 +205,7 @@ namespace Combat
                                         (boxs[id].block != 4))
                                 {
                                     boxs[id].forattack = 1;//помечаем ячейку, как ячейку для атаки
-                                    g.FillPolygon(coralBrush, myPointArrayHex);//закрашиваем шестиугольник
+                                    g.FillPolygon(darkRedBrush, myPointArrayHex);//закрашиваем шестиугольник
 
                                 }
                                 else
@@ -303,7 +303,7 @@ namespace Combat
                                     (boxs[id].block != 3))
                                 {
                                     boxs[id].forattack = 1;//помечаем ячейку, как ячейку для атаки
-                                    g.FillPolygon(coralBrush, myPointArrayHex);//закрашиваем шестиугольник
+                                    g.FillPolygon(darkRedBrush, myPointArrayHex);//закрашиваем шестиугольник
 
                                 }
                                 else
@@ -323,7 +323,7 @@ namespace Combat
                                         (boxs[id].block != 4))
                                 {
                                     boxs[id].forattack = 1;//помечаем ячейку, как ячейку для атаки
-                                    g.FillPolygon(coralBrush, myPointArrayHex);//закрашиваем шестиугольник
+                                    g.FillPolygon(darkRedBrush, myPointArrayHex);//закрашиваем шестиугольник
 
                                 }
                                 else
