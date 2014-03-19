@@ -20,7 +20,7 @@ namespace Combat
         {
             Player1 player1 = new Player1(countSpaceShip);
             Player2 player2 = new Player2(countSpaceShip);
-            AllBarriers barriers = new AllBarriers(r.Next(10, 50), r.Next(10, 20));
+            AllBarriers barriers = new AllBarriers((((width - 20) / 60) * ((height / 40) - 1)) / 40, (((width - 20) / 60) * ((height / 40) - 1)) / 60);
 
             for (int j = 0; j < ((width - 20) / 60); j++)//заполнение столбцами в ширину
             {
@@ -76,7 +76,13 @@ namespace Combat
                 if (boxs[i].block == 0)//если ячейка не блокированна
                 {
                     boxs[i].block = 3;//устанавливаем блокировку
-                    player1.spaceShipPlayer1[id].position = i;//позиция препятствия (номер ячейки)
+                    player1.spaceShipPlayer1[id].position = i;//позиция корабля (номер ячейки)
+                    player1.spaceShipPlayer1[id].player1PointX1 = boxs[i].pointX2;
+                    player1.spaceShipPlayer1[id].player1PointY1 = boxs[i].pointY2 + 10;
+                    player1.spaceShipPlayer1[id].player1PointX2 = boxs[i].pointX4 - 5;
+                    player1.spaceShipPlayer1[id].player1PointY2 = boxs[i].pointY4;
+                    player1.spaceShipPlayer1[id].player1PointX3 = boxs[i].pointX6;
+                    player1.spaceShipPlayer1[id].player1PointY3 = boxs[i].pointY6 - 10;
                 }
                 else
                 {
@@ -92,7 +98,13 @@ namespace Combat
                 if (boxs[i].block == 0)//если ячейка не блокированна
                 {
                     boxs[i].block = 4;//устанавливаем блокировку
-                    player2.spaceShipPlayer2[id].position = i;//позиция препятствия (номер ячейки)
+                    player2.spaceShipPlayer2[id].position = i;//позиция корабля (номер ячейки) 
+                    player2.spaceShipPlayer2[id].player2PointX1 = boxs[i].pointX3;
+                    player2.spaceShipPlayer2[id].player2PointY1 = boxs[i].pointY3 + 10;
+                    player2.spaceShipPlayer2[id].player2PointX2 = boxs[i].pointX1 + 5;
+                    player2.spaceShipPlayer2[id].player2PointY2 = boxs[i].pointY1;
+                    player2.spaceShipPlayer2[id].player2PointX3 = boxs[i].pointX5;
+                    player2.spaceShipPlayer2[id].player2PointY3 = boxs[i].pointY5 - 10;
                 }
                 else
                 {

@@ -21,6 +21,12 @@ namespace Combat
                     if (spaceShipPlayer1[id].position == selectPreviousBox)//находим корабль
                     {
                         spaceShipPlayer1[id].position = selectNewBox;//передвигаем корабль
+                        spaceShipPlayer1[id].player1PointX1 = boxs[selectNewBox].pointX2;
+                        spaceShipPlayer1[id].player1PointY1 = boxs[selectNewBox].pointY2 + 10;
+                        spaceShipPlayer1[id].player1PointX2 = boxs[selectNewBox].pointX4 - 5;
+                        spaceShipPlayer1[id].player1PointY2 = boxs[selectNewBox].pointY4;
+                        spaceShipPlayer1[id].player1PointX3 = boxs[selectNewBox].pointX6;
+                        spaceShipPlayer1[id].player1PointY3 = boxs[selectNewBox].pointY6 - 10;
                     }
                 }
             }
@@ -32,6 +38,12 @@ namespace Combat
                     if (spaceShipPlayer2[id].position == selectPreviousBox)//находим корабль
                     {
                         spaceShipPlayer2[id].position = selectNewBox;//передвигаем корабль
+                        spaceShipPlayer2[id].player2PointX1 = boxs[selectNewBox].pointX3;
+                        spaceShipPlayer2[id].player2PointY1 = boxs[selectNewBox].pointY3 + 10;
+                        spaceShipPlayer2[id].player2PointX2 = boxs[selectNewBox].pointX1 + 5;
+                        spaceShipPlayer2[id].player2PointY2 = boxs[selectNewBox].pointY1;
+                        spaceShipPlayer2[id].player2PointX3 = boxs[selectNewBox].pointX5;
+                        spaceShipPlayer2[id].player2PointY3 = boxs[selectNewBox].pointY5 - 10;
                     }
                 }
             }

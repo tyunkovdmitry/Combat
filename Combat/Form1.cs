@@ -36,13 +36,20 @@ namespace Combat
         public Form_CombatScreen()
         {
             InitializeComponent();
-
+            
             Form_Start fs = new Form_Start();
             fs.ShowDialog();
-            spaceShipCount = (int)fs.numericSpaceShip.Value;
-            if (fs.radioButton640x480.Checked) { combatImage.Width = 640; combatImage.Height = 480; }
-            if (fs.radioButton1440x900.Checked) { combatImage.Width = 1440; combatImage.Height = 900; }
-            if (fs.radioButton1900x1080.Checked) { combatImage.Width = 1900; combatImage.Height = 1080; }
+            if (fs.DialogResult == DialogResult.OK)
+            {
+                spaceShipCount = (int)fs.numericSpaceShip.Value;
+                if (fs.radioButton640x480.Checked) { combatImage.Width = 640; combatImage.Height = 480; }
+                if (fs.radioButton1440x900.Checked) { combatImage.Width = 1440; combatImage.Height = 900; }
+                if (fs.radioButton1900x1080.Checked) { combatImage.Width = 1900; combatImage.Height = 1080; }
+            }
+            else
+            {
+                Environment.Exit(0);
+            }
 
             Generate_Map();
             Draw();
@@ -241,9 +248,9 @@ namespace Combat
                                 if (spaceShipPlayer1[id1].position == boxs[id].id)
                                 {
                                     Point[] myPointArrayShip = {  //точки для рисование корабля
-                                    new Point(spaceShipPlayer1[0].player1PointX1+j*60, spaceShipPlayer1[0].player1PointY1+i*40),
-                                    new Point(spaceShipPlayer1[0].player1PointX2+j*60, spaceShipPlayer1[0].player1PointY2+i*40),
-                                    new Point(spaceShipPlayer1[0].player1PointX3+j*60, spaceShipPlayer1[0].player1PointY3+i*40)};
+                                    new Point(spaceShipPlayer1[id1].player1PointX1, spaceShipPlayer1[id1].player1PointY1),
+                                    new Point(spaceShipPlayer1[id1].player1PointX2, spaceShipPlayer1[id1].player1PointY2),
+                                    new Point(spaceShipPlayer1[id1].player1PointX3, spaceShipPlayer1[id1].player1PointY3)};
                                     g.FillPolygon(redBrush, myPointArrayShip);//рисуем корабль
                                     g.DrawString(spaceShipPlayer1[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(10 + j * 60, 10 + i * 40));//подписываем hp
                                 }
@@ -255,9 +262,9 @@ namespace Combat
                                 if (spaceShipPlayer2[id1].position == boxs[id].id)
                                 {
                                     Point[] compPointArrayShip = {  //точки для рисование корабля
-                                        new Point(spaceShipPlayer2[0].player2PointX1+j*60, spaceShipPlayer2[0].player2PointY1+i*40),
-                                        new Point(spaceShipPlayer2[0].player2PointX2+j*60, spaceShipPlayer2[0].player2PointY2+i*40),
-                                        new Point(spaceShipPlayer2[0].player2PointX3+j*60, spaceShipPlayer2[0].player2PointY3+i*40)};
+                                        new Point(spaceShipPlayer2[id1].player2PointX1, spaceShipPlayer2[id1].player2PointY1),
+                                        new Point(spaceShipPlayer2[id1].player2PointX2, spaceShipPlayer2[id1].player2PointY2),
+                                        new Point(spaceShipPlayer2[id1].player2PointX3, spaceShipPlayer2[id1].player2PointY3)};
                                     g.FillPolygon(blackBrush, compPointArrayShip);//рисуем корабль
                                     g.DrawString(spaceShipPlayer2[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(10 + j * 60, 10 + i * 40));//подписываем hp
                                 }
@@ -360,9 +367,9 @@ namespace Combat
                                 if (spaceShipPlayer1[id1].position == boxs[id].id)
                                 {
                                     Point[] myPointArrayShip = { //точки для рисование корабля
-                                    new Point(spaceShipPlayer1[0].player1PointX1+30+j*60, spaceShipPlayer1[0].player1PointY1+20+k*40),
-                                    new Point(spaceShipPlayer1[0].player1PointX2+30+j*60, spaceShipPlayer1[0].player1PointY2+20+k*40),
-                                    new Point(spaceShipPlayer1[0].player1PointX3+30+j*60, spaceShipPlayer1[0].player1PointY3+20+k*40)};
+                                    new Point(spaceShipPlayer1[id1].player1PointX1, spaceShipPlayer1[id1].player1PointY1),
+                                    new Point(spaceShipPlayer1[id1].player1PointX2, spaceShipPlayer1[id1].player1PointY2),
+                                    new Point(spaceShipPlayer1[id1].player1PointX3, spaceShipPlayer1[id1].player1PointY3)};
                                     g.FillPolygon(redBrush, myPointArrayShip);//рисуем корабль
                                     g.DrawString(spaceShipPlayer1[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Black, new PointF(40 + j * 60, 30 + k * 40));//подписываем hp
                                 }
@@ -374,9 +381,9 @@ namespace Combat
                                 if (spaceShipPlayer2[id1].position == boxs[id].id)
                                 {
                                     Point[] compPointArrayShip = {  //точки для рисование корабля
-                                    new Point(spaceShipPlayer2[0].player2PointX1+30+j*60, spaceShipPlayer2[0].player2PointY1+20+k*40),
-                                    new Point(spaceShipPlayer2[0].player2PointX2+30+j*60, spaceShipPlayer2[0].player2PointY2+20+k*40),
-                                    new Point(spaceShipPlayer2[0].player2PointX3+30+j*60, spaceShipPlayer2[0].player2PointY3+20+k*40)};
+                                    new Point(spaceShipPlayer2[id1].player2PointX1, spaceShipPlayer2[id1].player2PointY1),
+                                    new Point(spaceShipPlayer2[id1].player2PointX2, spaceShipPlayer2[id1].player2PointY2),
+                                    new Point(spaceShipPlayer2[id1].player2PointX3, spaceShipPlayer2[id1].player2PointY3)};
                                     g.FillPolygon(blackBrush, compPointArrayShip);//рисуем корабль
                                     g.DrawString(spaceShipPlayer2[id1].hp.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(40 + j * 60, 30 + k * 40));//подписываем hp
                                 }

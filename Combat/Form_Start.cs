@@ -15,6 +15,7 @@ namespace Combat
         public Form_Start()
         {
             InitializeComponent();
+            buttonOK.DialogResult = DialogResult.OK;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
