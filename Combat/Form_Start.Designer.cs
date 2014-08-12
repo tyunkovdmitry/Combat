@@ -85,9 +85,9 @@
             this.radioButton640x480.AutoSize = true;
             this.radioButton640x480.Location = new System.Drawing.Point(85, 83);
             this.radioButton640x480.Name = "radioButton640x480";
-            this.radioButton640x480.Size = new System.Drawing.Size(60, 17);
+            this.radioButton640x480.Size = new System.Drawing.Size(66, 17);
             this.radioButton640x480.TabIndex = 3;
-            this.radioButton640x480.Text = "640x40";
+            this.radioButton640x480.Text = "640x480";
             this.radioButton640x480.UseVisualStyleBackColor = true;
             // 
             // radioButton1440x900
